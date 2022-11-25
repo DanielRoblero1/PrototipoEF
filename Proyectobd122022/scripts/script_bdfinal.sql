@@ -5,7 +5,6 @@ CREATE TABLE IF NOT EXISTS tbl_usuario (
 	usuid INT NOT NULL AUTO_INCREMENT,
 	usunombre VARCHAR(45) NOT NULL,
 	usucontrasena VARCHAR(25) NOT NULL,
-	usuultimasesion DATE,
 	usuestatus VARCHAR(1) NOT NULL,
 	usunombrereal VARCHAR(60),
 	usucorreoe VARCHAR(60),
