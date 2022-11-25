@@ -46,12 +46,7 @@ public class mdiGeneral extends javax.swing.JFrame {
         mCierreSesion = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
         jM_MantenimientopApps = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenu8 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
@@ -101,50 +96,9 @@ public class mdiGeneral extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem3);
 
-        jMenuItem6.setText("Mantenimiento Perfil");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
-            }
-        });
-        jMenu4.add(jMenuItem6);
-
-        jMenuItem5.setText("Mantenimiento Aplicacion");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
-            }
-        });
-        jMenu4.add(jMenuItem5);
-
-        jMenuItem7.setText("Mantenimiento Módulos");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
-            }
-        });
-        jMenu4.add(jMenuItem7);
-
         jMenuBar1.add(jMenu4);
 
         jM_MantenimientopApps.setText("Procesos");
-
-        jMenuItem4.setText("Mantenimiento Perfil de Aplicacion");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
-        jM_MantenimientopApps.add(jMenuItem4);
-
-        jMenuItem8.setText("Mantenimiento Perfil Usuario");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
-            }
-        });
-        jM_MantenimientopApps.add(jMenuItem8);
-
         jMenuBar1.add(jM_MantenimientopApps);
 
         jMenu6.setText("Reportes");
@@ -197,41 +151,6 @@ public class mdiGeneral extends javax.swing.JFrame {
         ventana.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        frmMantenimientoPapps ventana2 = new frmMantenimientoPapps();
-        jDesktopPane1.add(ventana2);
-        Dimension desktopSize = jDesktopPane1.getSize();
-        Dimension FrameSize = ventana2.getSize();
-        ventana2.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2); 
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
-
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
-        frmMantenimientoAplicaciones ventana3 = new frmMantenimientoAplicaciones();
-        jDesktopPane1.add(ventana3);
-        Dimension desktopSize = jDesktopPane1.getSize();
-        Dimension FrameSize = ventana3.getSize();
-        ventana3.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);           
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
-
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
-        frmMantenimientoPerfiles ventana4 = new frmMantenimientoPerfiles();
-        jDesktopPane1.add(ventana4);
-        Dimension desktopSize = jDesktopPane1.getSize();
-        Dimension FrameSize = ventana4.getSize();
-        ventana4.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);            
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
-
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        // TODO add your handling code here:
-        frmMantenimientoModulos ventana5 = new frmMantenimientoModulos();
-        jDesktopPane1.add(ventana5);
-        Dimension desktopSize = jDesktopPane1.getSize();
-        Dimension FrameSize = ventana5.getSize();
-        ventana5.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);            
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
-
     private void mCierreSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mCierreSesionActionPerformed
         int respuesta_cs = JOptionPane.showConfirmDialog(this, "¿Desea Cerrar Sesión?", "Cerrar Sesión", JOptionPane.YES_NO_OPTION);
 
@@ -243,16 +162,6 @@ public class mdiGeneral extends javax.swing.JFrame {
       
         
     }//GEN-LAST:event_mCierreSesionActionPerformed
-
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        // TODO add your handling code here:
-       frmMantenimientoPerfilUsuario ventana6 = new frmMantenimientoPerfilUsuario();
-        jDesktopPane1.add(ventana6);
-        Dimension desktopSize = jDesktopPane1.getSize();
-        Dimension FrameSize = ventana6.getSize();
-        ventana6.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);              
-                                             
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         // TODO add your handling code here:
@@ -329,11 +238,6 @@ public class mdiGeneral extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem2;
     public javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    public javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenuItem mCierreSesion;
     // End of variables declaration//GEN-END:variables
