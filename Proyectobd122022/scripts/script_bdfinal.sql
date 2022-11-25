@@ -1,5 +1,5 @@
-CREATE SCHEMA IF NOT EXISTS `proyectobd122022` DEFAULT CHARACTER SET utf8 ;
-USE `proyectobd122022` ;
+CREATE SCHEMA IF NOT EXISTS `bdExamenFinal` DEFAULT CHARACTER SET utf8 ;
+USE `bdExamenFinal` ;
 
 CREATE TABLE IF NOT EXISTS tbl_usuario (
 	usuid INT NOT NULL AUTO_INCREMENT,
@@ -11,71 +11,10 @@ CREATE TABLE IF NOT EXISTS tbl_usuario (
 	usucorreoe VARCHAR(60),
 	usutelefono VARCHAR(25),
 	usudireccion VARCHAR(80),
+    usutipo VARCHAR(15),
 	PRIMARY KEY (usuid) )
 ENGINE = InnoDB CHARACTER SET = latin1;
-CREATE TABLE IF NOT EXISTS tbl_perfil (
-    perid INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    pernombre VARCHAR(30) NOT NULL,
-    perestatus VARCHAR (30) NOT NULL
-)ENGINE=InnoDB CHARACTER SET = latin1;
 
-CREATE TABLE IF NOT EXISTS tbl_aplicacion (
-	aplid int NOT NULL AUTO_INCREMENT,
-	aplnombre VARCHAR(50),
-	aplestatus VARCHAR(50),
-	PRIMARY KEY (aplid)
-) ENGINE=InnoDB CHARACTER SET = latin1;    
-
-CREATE TABLE IF NOT EXISTS tbl_modulo (
-	modid INT NOT NULL AUTO_INCREMENT,
-	modnombre VARCHAR(60) NOT NULL,
-	modestatus VARCHAR(60) NOT NULL,
-	PRIMARY KEY (modid) )
-ENGINE = InnoDB CHARACTER SET = latin1;
-
-CREATE TABLE IF NOT EXISTS tbl_aplicacionmodulo (
-	aplid INT NOT NULL,
-    modid INT NOT NULL,
-    PRIMARY KEY (aplid, modid),
-    FOREIGN KEY (aplid) REFERENCES tbl_aplicacion ( aplid),
-    FOREIGN KEY (modid) REFERENCES tbl_modulo (modid) )
-    ENGINE = InnoDB CHARACTER SET = latin1;
-    
- CREATE TABLE IF NOT EXISTS tbl_aplicacionperfil(
-	aplid INT NOT NULL,
-    perid INT NOT NULL,
-    PRIMARY KEY(aplid, perid),
-    FOREIGN KEY (aplid) REFERENCES tbl_aplicacion (aplid),     
-    FOREIGN KEY (perid) REFERENCES tbl_perfil (perid)
- ) ENGINE=InnoDB CHARACTER SET = latin1;     
-
-CREATE TABLE IF NOT EXISTS tbl_aplicacionusuario (
-	aplid INT NOT NULL,
-	usuid INT NOT NULL,
-	PRIMARY KEY (aplid, usuid), 
-	FOREIGN KEY (aplid) references tbl_aplicacion (aplid),
-	FOREIGN KEY (usuid) references tbl_usuario (usuid)
-) ENGINE = InnoDB CHARACTER SET = latin1;
-
-CREATE TABLE IF NOT EXISTS tbl_perfilusuario (
-	perid int NOT NULL,
-	usuid int NOT NULL,
-	PRIMARY KEY (perid, usuid),
-	FOREIGN KEY (perid) REFERENCES tbl_perfil (perid),
-	FOREIGN KEY (usuid) REFERENCES tbl_usuario (usuid)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE IF NOT EXISTS tbl_bitacora (
-    bitid int auto_increment PRIMARY KEY,
-    bitfecha datetime NULL, 
-	bitaccion VARCHAR(10) NOT NULL,
-    usuid INT NOT NULL,
-    aplid INT NOT NULL,
-	FOREIGN KEY (aplid) references tbl_aplicacion (aplid),
-	FOREIGN KEY (usuid) references tbl_usuario (usuid)    
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;	
-
--- --------------- ARE DE GESTION ADMINISTRATIVA ---------------------------
 CREATE TABLE tbl_bodegas
 (
 	bodcodigo INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -203,7 +142,8 @@ CREATE TABLE tbl_ventas_detalle
 	FOREIGN KEY (prodcodigo) REFERENCES tbl_productos(prodcodigo)    
 
 ) ENGINE=INNODB DEFAULT CHARSET=latin1;
--------------------- PARTE VENTAS MARCO Y DANIEL-------------------------- 
+
+-------------------- ARE VENTAS-------------------------- 
 CREATE TABLE deudas_ventas_encabezado(
 	dve_documento VARCHAR(10),
 	clicodigo INT,			
@@ -262,18 +202,9 @@ CREATE TABLE pedidos_ventas_detalle(
     PRIMARY KEY (pve_documento, prodcodigo),
     FOREIGN KEY (pve_documento) REFERENCES pedidos_ventas_encabezado(pve_documento),
     FOREIGN KEY (prodcodigo) REFERENCES tbl_productos(prodcodigo)
-) ENGINE=INNODB DEFAULT CHARSET=latin1;
-
-CREATE TABLE concepto_clientes(
-	clicodigo INT,
-    coc_nombre VARCHAR(15),
-    coc_tipo VARCHAR(15),
-    coc_estado VARCHAR(1),
-    PRIMARY KEY (clicodigo),
-    FOREIGN KEY (clicodigo) REFERENCES tbl_clientes(clicodigo)
-) ENGINE=INNODB DEFAULT CHARSET=latin1;
-
--------------------- PARTE COMPRAS JUAN Y OMAR -------------------------- 
+) ENGINE=INNODB DEFAULT CHARSET=latin1; 
+ 
+ -------------------- AREA COMPRAS -------------------------- 
 CREATE TABLE deudas_compras_encabezado(
 	dce_documento VARCHAR(10),
 	procodigo INT,			
@@ -334,65 +265,57 @@ CREATE TABLE pedidos_compras_detalle(
     FOREIGN KEY (prodcodigo) REFERENCES tbl_productos(prodcodigo)
 ) ENGINE=INNODB DEFAULT CHARSET=latin1;
 
-CREATE TABLE concepto_proveedores(
-	procodigo INT,
-	cop_nombre VARCHAR(15),
-    cop_tipo VARCHAR(15),
-    cop_estado VARCHAR(1),
-    PRIMARY KEY (procodigo),
-    FOREIGN KEY (procodigo) REFERENCES tbl_proveedores(procodigo)
+ -------------------- AREA DEVOLUCION -------------------------- 
+
+CREATE TABLE tbl_ventasdevolucion_encabezado
+(
+	idvendev VARCHAR(10),
+    pve_documento VARCHAR(10),
+    clicodigo INT,
+    Fechavendev DATE,
+    PRIMARY KEY (idvendev, pve_documento, clicodigo),
+    FOREIGN KEY (pve_documento) REFERENCES pedidos_ventas_encabezado(pve_documento),
+	FOREIGN KEY (clicodigo) REFERENCES tbl_clientes(clicodigo)
 ) ENGINE=INNODB DEFAULT CHARSET=latin1;
 
--------------------- PARTE INVENTARIO BYRON Y CARLOS --------------------------
-CREATE TABLE tbl_transporte
+CREATE TABLE tbl_ventasdevolucion_detalle
 (
-	tranmatricula INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    tranmodelo VARCHAR(30)  NOT NULL,
-    trantipo VARCHAR(30) NOT NULL,
-    tranmarca VARCHAR(30) NOT NULL
-    ) ENGINE=INNODB DEFAULT CHARSET=latin1;
-CREATE TABLE tbl_conductor
-(
-	condid INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    condnombre VARCHAR(30)  NOT NULL,
-	condestatus VARCHAR(30) NOT NULL
-        ) ENGINE=INNODB DEFAULT CHARSET=latin1;
-CREATE TABLE tbl_conceptos
-(
-	conid INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    connombre VARCHAR(30)  NOT NULL,
-	conestatus VARCHAR(30) NOT NULL
-        ) ENGINE=INNODB DEFAULT CHARSET=latin1;
+	idvendev VARCHAR(10),
+    prodcodigo INT,
+    ventdevde_cantidad FLOAT (10,2),
+    ventdevde_total FLOAT (10,2),
+    PRIMARY KEY (idvendev, prodcodigo),
+    FOREIGN KEY (idvendev) REFERENCES tbl_ventasdevolucion_encabezado(idvendev),
+	FOREIGN KEY (prodcodigo) REFERENCES tbl_productos(prodcodigo)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
 
-USE proyectobd122022;
-ALTER TABLE tbl_transporte modify tranmatricula int(15) NOT NULL;
-
-        
-CREATE TABLE tbl_movimientoen
+CREATE TABLE tbl_comprasdevolucion_encabezado
 (
-	movid INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    movfecha VARCHAR(30) NOT NULL,
-    movestado VARCHAR(30) NOT NULL
+	idcomdev VARCHAR(10),
+    pce_documento VARCHAR(10),
+    procodigo INT,
+    Fechavendev DATE,
+    PRIMARY KEY (idcomdev, pce_documento, procodigo),
+    FOREIGN KEY (pce_documento) REFERENCES pedidos_compras_encabezado(pce_documento),
+	FOREIGN KEY (procodigo) REFERENCES tbl_proveedores(procodigo)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+CREATE TABLE tbl_comprasdevolucion_detalle
+(
+	idcomdev VARCHAR(10),
+    prodcodigo INT,
+    ventdevde_cantidad FLOAT (10,2),
+    ventdevde_total FLOAT (10,2),
+    PRIMARY KEY (idcomdev, prodcodigo),
+    FOREIGN KEY (idcomdev) REFERENCES tbl_comprasdevolucion_encabezado(idcomdev),
+	FOREIGN KEY (prodcodigo) REFERENCES tbl_productos(prodcodigo)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+-- TABLA PARA TRIGGER --
+CREATE TABLE tbl_bitacoraventas
+(
+	bitventas INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    bitventas_accion VARCHAR(55),
+    bitventas_fecha DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
     
-) ENGINE=INNODB DEFAULT CHARSET=latin1;
-
-CREATE TABLE tbl_movimientode
-(
-	movid INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    prodcodigo INT NOT NULL,
-    conid INT NOT NULL,
-    clicodigo INT NOT NULL,
-    procodigo INT NOT NULL,
-    lincodigo INT NOT NULL,
-    marcodigo INT NOT NULL, 
-    movcantidad INT NOT NULL,
-    prodexistencia  INT NULL,
-    FOREIGN KEY (movid) REFERENCES tbl_movimientoen(movid), 
-    FOREIGN KEY (prodcodigo) REFERENCES tbl_productos(prodcodigo), 
-    FOREIGN KEY (conid) REFERENCES tbl_conceptos(conid),
-    FOREIGN KEY (clicodigo) REFERENCES tbl_clientes(clicodigo),  
-    FOREIGN KEY (marcodigo) REFERENCES tbl_marcas(marcodigo),  
-    FOREIGN KEY (lincodigo) REFERENCES tbl_lineas(lincodigo),  
-    FOREIGN KEY (procodigo) REFERENCES tbl_proveedores(procodigo)  
-) ENGINE=INNODB DEFAULT CHARSET=latin1;
-
